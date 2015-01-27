@@ -33,10 +33,6 @@ LambDate.prototype.toObj = function() {
   };
 };
 
-LambDate.prototype.toString = function(fmt) {
-  return this.toDate().toString(fmt);
-};
-
 LambDate.prototype.plus = function(n, unit) {
   if(typeof n != "number") {
     throw "Not a number";
@@ -79,5 +75,17 @@ LambDate.prototype.plus = function(n, unit) {
 LambDate.prototype.minus = function(n, unit) {
   return this.plus(-n, unit);
 };
+
+var _delegated = [
+  'toLocaleString', 'toLocaleTimeString', 'toLocalDateString',
+  'toString', 'toTimeString', 'toDateString',
+  'toUTCString', 'toISOString', 'toJSON', 'valueOf'
+];
+
+_delegated.forEach(function(method) {
+  LambDate.prototype[method] = function() {
+    return this.toDate()[method](arguments);
+  };
+});
 
 module.exports = LambDate;

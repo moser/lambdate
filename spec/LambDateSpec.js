@@ -145,7 +145,13 @@ describe("LambDate", function() {
     });
 
     it("#toString delegates to Date#toString", function() {
-      expect(subject.toString("MMM")).toEqual("Jul");
+      expect(subject.toString()).toEqual("Sun Jul 13 2014 09:23:44 GMT+0200 (CEST)");
+    });
+
+    // does not work in every JS implementation. In browsers it should.
+    xit("#toLocaleDateString delegates to Date#toLocaleDateString", function() {
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      expect(subject.toString()).toEqual("Sonntag, 13. Juli 2014");
     });
   });
 });
